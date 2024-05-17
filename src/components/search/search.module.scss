@@ -1,0 +1,10 @@
+@import './../../assets/variables';
+.searchContainer {
+    display: grid;
+    gap: 5px;
+    input {
+        border:1px solid $primary-color;
+        border-radius: 6px;
+        height: 1.5rem;
+    }
+}

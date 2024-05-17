@@ -1,17 +1,20 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
-import DataExample from './DataExample';
-
+import { Link } from 'react-router-dom';
+import styles from './assets/app.module.scss';
+import Carousel from './components/carousel/carousel';
+import { usePlanetList } from './data/queries';
 const App = () => {
-  const queryClient = new QueryClient();
+  const { data: list } = usePlanetList();
+  return (
+    <>
+      <h1 className={styles.textCenter}>Ledn frontend challenge</h1>
+        <Carousel planets={list}></Carousel>
 
-  return  (
-    <QueryClientProvider client={queryClient}>
-      <h1 style={{
-        width: "100%",
-        textAlign: 'center',
-      }}>Ledn frontend challenge</h1>
-      <DataExample />
-    </QueryClientProvider>
+        <div className={styles.btnWrapper}>
+          <button className={styles.buttonToPage} aria-label="Go to planets Page"><Link to={'/planets'} >Visit all the Empire's planets</Link></button>
+
+        </div>
+      </>
   );
 };
 
