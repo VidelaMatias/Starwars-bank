@@ -1,40 +1,21 @@
-import { FC, useEffect, useState } from "react"
-
+import { FC, useState } from "react"
+import styles from './sorter.module.scss'
 interface props {
-    onSort: any,
-    initialData:any
+    onSort: (...args: any[]) => any
 }
-const Sorter: FC<props> = ({ onSort, initialData }) => {
+const Sorter: FC<props> = ({ onSort }) => {
 
-    const [data, setData] = useState(initialData);
     const [sortOrder, setSortOrder] = useState('default');
 
-    useEffect(() => {
-        if (initialData) {
-            setData(initialData)
-        }
-    }, [initialData])
-
-    const handleSort = (e: any) => {
-        const order = e.target.value;
-        setSortOrder(order);
-
-        let sortedData;
-        if (order === 'asc') {
-            sortedData = [...data].sort((a, b) => a.name.localeCompare(b.name));
-        } else if (order === 'desc') {
-            sortedData = [...data].sort((a, b) => b.name.localeCompare(a.name));
-        } else {
-            sortedData = initialData;
-        }
-        setData(sortedData);
-        onSort(sortedData)
+    const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSortOrder(e.target.value);
+        onSort(e.target.value);
     };
 
     return (
-        <div>
+        <div >
             <label htmlFor="sort">Sort by Name: </label>
-            <select id="sort" value={sortOrder} onChange={handleSort}>
+            <select id="sort" value={sortOrder} onChange={handleSort} className={styles.select}>
                 <option value="default">Default</option>
                 <option value="asc">Ascending</option>
                 <option value="desc">Descending</option>

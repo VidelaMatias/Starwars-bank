@@ -1,11 +1,11 @@
 import { FC } from "react";
 import styles from './search.module.scss'
 interface props {
-    onChangeHandler:any,
+    onChangeHandler: (...args: any[]) => any
     searchBy: string
 }
 
-const Search:FC<props>= ({onChangeHandler,searchBy})=> {
+const Search: FC<props> = ({ onChangeHandler, searchBy }) => {
 
     return (
         <div className={styles.searchContainer}>

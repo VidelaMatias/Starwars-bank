@@ -1,19 +1,20 @@
 import { FC, useEffect, useState } from "react";
 import { usePlanetDetail } from "../data/queries";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { User, Transaction } from "../types";
 import Table from "../components/table/table";
 import styles from './../assets/app.module.scss'
 import Filter from "../components/filter/filter";
+import PreviousButton from "../components/previousPageButton/previousPageButton";
 
 const PlanetDetail: FC<{}> = () => {
 
     const { planetid: planetId } = useParams();
     const { data: planet } = usePlanetDetail(planetId!);
     const [planetInfo, setPlanetInfo] = useState([]);
-    const [residents, setResidents] = useState([]);
-    const [transactions, setTransactions] = useState([]);
-    const [filteredTransactions, setFilteredTransactions] = useState([]);
+    const [residents, setResidents] = useState<User[]>([]);
+    const [transactions, setTransactions] = useState<Transaction[]>([]);
+    const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
 
     useEffect(() => {
         if (planet) {
@@ -97,7 +98,7 @@ const PlanetDetail: FC<{}> = () => {
             const filteredResident = removeTransactionsUnwantedKeys(element);
             return (
                 <tr key={element.id}>
-                    {Object.values(filteredResident).map((value: any, index) => (
+                    {Object.values(filteredResident).map((value, index: number) => (
                         <td key={index}>{value}</td>
                     ))}
                 </tr>
@@ -105,18 +106,24 @@ const PlanetDetail: FC<{}> = () => {
         });
     };
 
-    const onFilterHandler = (data:any) => {
-        setFilteredTransactions(data);
+    const onFilterHandler = (filter: string) => {
+            
+            const CURRENCY_GCS = 'GCS';
+            const CURRENCY_ICS = 'ICS';
+            let filtered;
+            if (filter === CURRENCY_GCS) {
+                filtered = [...transactions].filter((item: Transaction) => item.currency === CURRENCY_GCS)
+            } else if (filter === CURRENCY_ICS) {
+                filtered = [...transactions].filter((item: Transaction) => item.currency === CURRENCY_ICS)
+            } else {
+                filtered = transactions;
+            }
+            setFilteredTransactions(filtered);
     };
     
     return (    
         <div>
-            <button className={styles.arrowPreviousBtn} type="button" aria-label="Go to previous page" >
-                <Link to="/planets">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#fe5000" stroke="#fe5000"><path d="M15.293 3.293 6.586 12l8.707 8.707 1.414-1.414L9.414 12l7.293-7.293-1.414-1.414z" /></svg>
-                </Link>
-            </button>
-
+            <PreviousButton href="/" />
             <h2 className={styles.textCenter}>Planet Details</h2>
             {planetInfo &&
                 <>
@@ -136,7 +143,7 @@ const PlanetDetail: FC<{}> = () => {
             {filteredTransactions ?
                 <>
                     <h3 className={styles.subtitle}>Transactions</h3>
-                    <Filter onFilter={onFilterHandler} initialData={transactions} ></Filter>
+                    <Filter onFilter={onFilterHandler}></Filter>
                     <Table headers={getTransactionsHeaders(filteredTransactions)} rows={getTransactionsRows(filteredTransactions)} ></Table>
                 </>
                 :

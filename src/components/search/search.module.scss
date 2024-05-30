@@ -2,6 +2,12 @@
 .searchContainer {
     display: grid;
     gap: 5px;
+    width: 250px;
+    @media screen and (max-width: 565px) {
+        width: 100%;
+    }
+    
+    
     input {
         border:1px solid $primary-color;
         border-radius: 6px;

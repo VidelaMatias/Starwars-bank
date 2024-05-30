@@ -33,12 +33,12 @@ body {
         padding: 1rem;
         border: 1px solid $orange-color;
         &:hover {
-            opacity: .6;
+            opacity: 0.6;
         }
         a {
             text-decoration: none;
             color: white;
-            font-size: 1.5rem ;
+            font-size: 1.5rem;
             font-weight: 600;
         }
     }
@@ -49,24 +49,26 @@ body {
     color: $orange-color;
     padding: 20px;
 }
-.topContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-}
+
 .arrowPreviousBtn {
     background-color: transparent;
     border: none;
+    &:hover {
+        svg {
+            fill:#fff;
+            stroke:#fff;
+        }
+    }
 }
+
 .scrollToTop {
     position: fixed;
     bottom: 20px;
     right: 20px;
     z-index: 1000;
-  }
-  
-  .scrollButton {
+}
+
+.scrollButton {
     background-color: $primary-color;
     color: white;
     border: none;
@@ -79,12 +81,12 @@ body {
     align-items: center;
     justify-content: center;
     transition: opacity 0.3s, transform 0.3s;
-  }
-  
-  .scrollButton:hover {
+}
+
+.scrollButton:hover {
     background-color: $orange-color;
-  }
-  
-  .scrollButton:active {
+}
+
+.scrollButton:active {
     transform: scale(0.95);
-  }
+}

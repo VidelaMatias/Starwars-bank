@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import styles from "./table.module.scss"
 
 interface props {
-    headers?: any,
+    headers?: ReactNode,
     rows: any[]
 }
 const Table: FC<props> = ({ headers, rows }) => {
